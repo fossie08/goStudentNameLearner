@@ -22,7 +22,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: 1.23.1  # Specify your desired Go version
+          go-version: 1.20  # Specify your desired Go version
 
       # Cache Go modules to speed up builds
       - name: Cache Go modules
@@ -35,20 +35,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-
 
+      # Install Fyne CLI
+      - name: Install Fyne CLI
+        run: go install fyne.io/fyne/v2/cmd/fyne@latest
+
       # Install dependencies
       - name: Install dependencies
         run: go mod tidy
 
-      # Build the application
-      - name: Build the app
-        run: fyne build -o ./build/app .
-
-      # Check for Fyne-specific requirements
-      - name: Check Fyne Dependencies
-        run: |
-          if ! command -v x11 &> /dev/null && ! command -v wayland &> /dev/null; then
-            echo "WARNING: Fyne may require GUI-related dependencies (X11/Wayland) to run on this environment."
-          fi
+      # Build the application using Fyne CLI
+      - name: Build the app with Fyne
+        run: fyne package -os linux -icon "Icon.png" -output ./build/app
 
       # Optionally: Archive the build artifact (binary)
       - name: Archive build artifact
