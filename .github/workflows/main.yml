@@ -18,6 +18,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Install system dependencies for Fyne
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libgl1-mesa-dev \
+            libxi-dev \
+            libxcursor-dev \
+            libxrandr-dev \
+            libxinerama-dev \
+            libxxf86vm-dev \
+            libx11-dev \
+            libx11-xcb-dev \
+            libxcb1-dev \
+            libx11-xcb1 \
+            libxrender-dev \
+            libxext-dev \
+            xorg-dev
+
       # Set up Go environment
       - name: Set up Go
         uses: actions/setup-go@v4
