@@ -45,7 +45,7 @@ jobs:
 
       # Build the application using Fyne CLI
       - name: Build the app with Fyne
-        run: fyne package -os linux -icon "Icon.png" -output ./build/app
+        run: fyne build -output ./build/app
 
       # Optionally: Archive the build artifact (binary)
       - name: Archive build artifact
