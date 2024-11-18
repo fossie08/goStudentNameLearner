@@ -9,8 +9,8 @@ on:
       - main
 
 jobs:
-  build:
-    name: Build and Test Fyne App
+  build-and-release:
+    name: Build, Test, and Create Beta Release
     runs-on: ubuntu-latest
 
     steps:
@@ -30,9 +30,7 @@ jobs:
             libxinerama-dev \
             libxxf86vm-dev \
             libx11-dev \
-            libx11-xcb-dev \
             libxcb1-dev \
-            libx11-xcb1 \
             libxrender-dev \
             libxext-dev \
             xorg-dev
@@ -64,4 +62,23 @@ jobs:
 
       # Build the application using Fyne CLI
       - name: Build the app with Fyne
-        run: fyne build .
+        run: fyne build -o ./build/studentNameLearner.exe
+
+      # Archive the built artifact
+      - name: Archive build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: fyne-app
+          path: ./build/myapp
+
+      # Create a GitHub Release and upload the binary
+      - name: Create Beta Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: ./build/myapp
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: beta-1.0.0
+          name: Beta Release 1.0.0
+          body: "This is a beta release of the studentNameLearner app."
+          draft: false
+          prerelease: true
