@@ -45,11 +45,4 @@ jobs:
 
       # Build the application using Fyne CLI
       - name: Build the app with Fyne
-        run: fyne build -output ./build/app
-
-      # Optionally: Archive the build artifact (binary)
-      - name: Archive build artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: fyne-app
-          path: ./build/app
+        run: fyne build .
