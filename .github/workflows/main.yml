@@ -41,7 +41,7 @@ jobs:
 
       # Build the application
       - name: Build the app
-        run: go build -o ./build/app .
+        run: fyne build -o ./build/app .
 
       # Check for Fyne-specific requirements
       - name: Check Fyne Dependencies
